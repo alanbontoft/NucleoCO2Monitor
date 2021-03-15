@@ -55,7 +55,7 @@ uint8_t address = 0x61 << 1;
 float fCO2, fTemperature, fRH;
 uint32_t pause = 5;
 bool readSCD30 = false;
-bool transmitValues = false;
+bool transmitReadings = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -142,13 +142,13 @@ int main(void)
 		  readSCD30 = false;
 	  }
 
-	  if (transmitValues)
+	  if (transmitReadings)
 	  {
 		  // send latest values
 		  e32TransmitReadings();
 
 		  // clear flag
-		  transmitValues = false;
+		  transmitReadings = false;
 	  }
     /* USER CODE END WHILE */
 
@@ -536,7 +536,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if (htim == &htim16)			// UART timer
 	{
-		transmitValues = true;
+		transmitReadings = true;
 	}
 	else if (htim == &htim17)		// I2C timer
 	{
